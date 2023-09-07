@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Filliere;
+use App\Entity\Note;
 
 
 /**
@@ -46,7 +47,7 @@ class Etudiant
     #[ORM\ManyToOne(inversedBy: 'etudiants')]
     private ?Filliere $filliere = null;
 
-    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Note::class)]
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Note::class, cascade: ['remove'])]
     private Collection $notes;
 
     public function __construct()
@@ -113,7 +114,7 @@ class Etudiant
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): static
+    public function setPhoto(?string $photo): static
     {
         $this->photo = $photo;
 

@@ -1,1 +1,70 @@
 {% extends "@EasyAdmin/page/content.html.twig" %}
+
+{% block body_id 'easyadmin-dashboard' %}
+
+{% block content %}
+    <div class="dashboard">
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre d'étudiants</h5>
+                        <div class="card-number">
+                            {{ nombreEtudiants }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre de professeurs</h5>
+                        <div class="card-number">
+                            {{ nombreProfesseurs }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre de modules</h5>
+                        <div class="card-number">
+                            {{ nombreModules }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre de filières</h5>
+                        <div class="card-number">
+                            {{ nombreFillieres }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre de filières</h5>
+                        <div class="card-number">
+                            {{ nombreExamens }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div class="col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre de filières</h5>
+                        <div class="card-number">
+                            {{ nombreNotes }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

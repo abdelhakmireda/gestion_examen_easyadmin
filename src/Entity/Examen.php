@@ -32,7 +32,7 @@ class Examen
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255,nullable: true)]
     private ?string $classe = null;
 
     #[ORM\ManyToOne(inversedBy: 'examens')]
@@ -123,7 +123,7 @@ class Examen
         return $this->classe;
     }
 
-    public function setClasse(string $classe): static
+    public function setClasse(?string $classe): static
     {
         $this->classe = $classe;
 

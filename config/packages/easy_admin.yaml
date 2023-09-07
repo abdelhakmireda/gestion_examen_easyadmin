@@ -1,0 +1,6 @@
+# config/packages/easy_admin.yaml
+easy_admin:
+    entities:
+        Filliere:
+            class: App\Entity\Filliere
+            label: 'Filières'

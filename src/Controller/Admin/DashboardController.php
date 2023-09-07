@@ -13,29 +13,46 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 class DashboardController extends AbstractDashboardController
 {
+    
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
+        $etudiantRepository = $this->entityManager->getRepository(Etudiant::class);
+        $professeurRepository = $this->entityManager->getRepository(Professeur::class);
+        $moduleRepository = $this->entityManager->getRepository(Module::class);
+        $filliereRepository = $this->entityManager->getRepository(Filliere::class);
+        $examenRepository = $this->entityManager->getRepository(Examen::class);
+        $noteRepository = $this->entityManager->getRepository(Note::class);
 
-        // Option 1. You can make your dashboard redirect to some common page of your backend
-        //
-        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        // return $this->redirect($adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
+        $nombreEtudiants = count($etudiantRepository->findAll());
+        $nombreProfesseurs = count($professeurRepository->findAll());
+        $nombreModules = count($moduleRepository->findAll());
+        $nombreFillieres = count($filliereRepository->findAll());
+        $nombreExamens = count($examenRepository->findAll());
+        $nombreNotes = count($noteRepository->findAll());
 
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirect('...');
-        // }
-
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
-        return $this->render('admin/dashboard.html.twig');
+        return $this->render('admin/dashboard.html.twig', [
+            'nombreEtudiants' => $nombreEtudiants,
+            'nombreProfesseurs' => $nombreProfesseurs,
+            'nombreModules' => $nombreModules,
+            'nombreFillieres' => $nombreFillieres,
+            'nombreExamens' => $nombreExamens,
+            'nombreNotes' => $nombreNotes,
+        ]);
     }
+
 
     public function configureDashboard(): Dashboard
     {
@@ -46,12 +63,14 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('etudiant', 'fas fa-list', Etudiant::class);
-        yield MenuItem::linkToCrud('examen', 'fas fa-list', Examen::class);
-        yield MenuItem::linkToCrud('Filliere', 'fas fa-list', Filliere::class);
-        yield MenuItem::linkToCrud('Module', 'fas fa-list', Module::class);
-        yield MenuItem::linkToCrud('Note', 'fas fa-list', Note::class);
-        yield MenuItem::linkToCrud('Professeur', 'fas fa-list', Professeur::class);
+        yield MenuItem::linkToCrud('etudiant', 'fas fa-user-graduate', Etudiant::class);
+        yield MenuItem::linkToCrud('Professeur', 'fas fa-chalkboard-teacher', Professeur::class);
+        yield MenuItem::linkToCrud('examen', 'fas fa-file-alt', Examen::class);
+        yield MenuItem::linkToCrud('Filliere', 'fas fa-university', Filliere::class);
+        yield MenuItem::linkToCrud('Module', 'fas fa-book', Module::class);
+        yield MenuItem::linkToCrud('Note', 'fas fa-sticky-note', Note::class);
+        
     }
- }
+}
+
   

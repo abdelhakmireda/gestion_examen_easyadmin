@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Repository\ProfesseurRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Filliere;
@@ -39,15 +40,17 @@ class Professeur
     #[ORM\Column(length: 255)]
     private ?string $photo = null;
      /**
-     * @Vich\UploadableField(mapping="etudiants", fileNameProperty="photo")
-     */
+    * @Vich\UploadableField(mapping="professeurs", fileNameProperty="photo")
+    */
     private ?File $photoFile = null;
+
 
     #[ORM\OneToMany(mappedBy: 'professeur', targetEntity: Module::class)]
     private Collection $modules;
 
-    #[ORM\OneToMany(mappedBy: 'professeur', targetEntity: Examen::class)]
+    #[ORM\OneToMany(mappedBy: 'professeur', targetEntity: Examen::class, cascade: ['remove'])]
     private Collection $examens;
+
 
     public function __construct()
     {
@@ -126,7 +129,7 @@ class Professeur
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): static
+    public function setPhoto(?string $photo): static
     {
         $this->photo = $photo;
 

@@ -10,6 +10,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 class ExamenCrudController extends AbstractCrudController
 {
@@ -17,6 +20,12 @@ class ExamenCrudController extends AbstractCrudController
     {
         return Examen::class;
     }
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL);
+    }
+
 
     public function configureFields(string $pageName): iterable
     {
@@ -38,7 +47,6 @@ class ExamenCrudController extends AbstractCrudController
                     'Rattrapage' => 'Rattrapage',
                 ]),
             TextField::new('description', 'Description'),
-            TextField::new('classe', 'Classe'),
             AssociationField::new('professeur', 'Professeur')
                 
         ];
