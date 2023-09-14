@@ -1,0 +1,57 @@
+{# templates/admin/note_etudiant/search.html.twig #}
+
+{% extends '@EasyAdmin/layout.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center">Rechercher un étudiant et ses notes</h1>
+
+                {{ form_start(form, {'attr': {'class': 'mt-4'}}) }}
+                <div class="mb-3">
+                    {{ form_row(form.cne, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <button type="submit" class="btn btn-primary">Rechercher</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+        {% if etudiant is not null %}
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-12">
+            <h2 class="text-center">Notes de l'étudiant</h2>
+           <a href="{{ path('admin_notes_etudiant_print', {'cne': etudiant.cne}) }}" class="btn btn-primary float-end">Imprimer</a>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>CNE</th>
+                        <th>Fillière</th>
+                        <th>Module</th>
+                        <th>Valeur</th>
+                        <th>Mention</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for note in notesEtudiant %}
+                        <tr>
+                            <td>{{ etudiant.nom }}</td>
+                            <td>{{ etudiant.prenom }}</td>
+                            <td>{{ etudiant.cne }}</td>
+                            <td>{{ etudiant.filliere.nom }}</td>
+                            <td>{{ note.module.nom }}</td>
+                            <td>{{ note.valeur }}</td>
+                            <td>{{ note.mention }}</td>
+                            <td>{{ note.description }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endif %}
+    </div>
+{% endblock %}

@@ -94,7 +94,8 @@ class Note
         return $this;
     }
     public function __toString()
-{
-    return $this->valeur; // Remplacez 'nom' par le champ que vous souhaitez afficher comme chaîne
-}
+    {
+        return (string) $this->valeur; // Conversion de la valeur en chaîne
+    }
+    
 }

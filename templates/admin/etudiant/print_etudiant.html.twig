@@ -1,0 +1,76 @@
+<!-- templates/admin/etudiant/print_list.html.twig -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <style>
+        /* Styles CSS personnalisés */
+        h1 {
+            color: #333; /* Couleur du titre */
+            text-align: center; /* Centrer le titre */
+            font-size: 32px; /* Taille de police plus grande */
+            border-bottom: 2px solid #333; /* Ligne en dessous du titre */
+            padding-bottom: 10px; /* Espacement entre le titre et la ligne */
+            margin-bottom: 20px; /* Espacement en dessous du titre */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd; /* Bordures du tableau */
+            padding: 10px; /* Espacement du contenu cellulaire */
+            text-align: center; /* Centrer le texte dans les cellules */
+        }
+        img {
+            max-width: 100px; /* Taille maximale de l'image */
+        }
+        /* Ajoutez des styles spécifiques pour le tableau */
+        .table {
+            width: 100%;
+        }
+        .table th {
+            background-color: #f2f2f2; /* Couleur de fond pour les en-têtes */
+        }
+        .table th, .table td {
+            border: 1px solid #ddd; /* Bordures pour séparer les champs */
+            padding: 10px;
+        }
+        .table img {
+            max-width: 80px; /* Réduisez un peu la taille des images */
+        }
+        /* Ajoutez des traits horizontaux pour séparer les lignes */
+        .table tr {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des étudiants</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% block content %}
+                {% for etudiant in etudiants %}
+                    <tr>
+                        <td><img src="{{ asset('uploads/images/etudiants/' ~ etudiant.photo) }}" alt="Photo"></td>
+                        <td>{{ etudiant.nom }}</td>
+                        <td>{{ etudiant.prenom }}</td>
+                        <td>{{ etudiant.email }}</td>
+                    </tr>
+                {% endfor %}
+            {% endblock %}
+        </tbody>
+    </table>
+</body>
+</html>

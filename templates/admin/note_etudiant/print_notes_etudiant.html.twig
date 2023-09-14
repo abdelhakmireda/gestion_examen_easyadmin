@@ -1,0 +1,81 @@
+{# templates/admin/note_etudiant/print_notes_etudiant.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Notes de l'étudiant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        h1 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Informations de l'étudiant</h1>
+    <table>
+        <tr>
+            <td><strong>Nom:</strong></td>
+            <td>{{ etudiant.nom }}</td>
+            <td rowspan="4" style="text-align: center;">
+                <img src="{{ asset('uploads/images/etudiants/' ~ etudiant.photo) }}" alt="{{ etudiant.nom }} {{ etudiant.prenom }}" style="max-width: 100px;">
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Prénom:</strong></td>
+            <td>{{ etudiant.prenom }}</td>
+        </tr>
+        <tr>
+            <td><strong>CNE:</strong></td>
+            <td>{{ etudiant.cne }}</td>
+        </tr>
+        <tr>
+            <td><strong>Fillière:</strong></td>
+            <td>{{ etudiant.filliere.nom }}</td>
+        </tr>
+    </table>
+
+    <h2>Notes de l'étudiant</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Module</th>
+                <th>Valeur</th>
+                <th>Mention</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for note in notesEtudiant %}
+                <tr>
+                    <td>{{ note.module.nom }}</td>
+                    <td>{{ note.valeur }}</td>
+                    <td>{{ note.mention }}</td>
+                    <td>{{ note.description }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

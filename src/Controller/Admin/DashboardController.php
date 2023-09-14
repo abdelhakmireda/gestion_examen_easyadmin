@@ -90,7 +90,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Module', 'fas fa-book', Module::class);
         yield MenuItem::linkToCrud('Note', 'fas fa-sticky-note', Note::class);
         yield MenuItem::linkToCrud('user', 'fas fa-sticky-note', User::class);
-        
+        yield MenuItem::section('Gestion des Étudiants', 'fas fa-graduation-cap')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToRoute('Rechercher des Notes d\'un Étudiant', 'fas fa-search', 'admin_notes_etudiant');
+
     }
 }
 

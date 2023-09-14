@@ -33,8 +33,8 @@ class Etudiant
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $contact = null;
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $cne = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
@@ -46,6 +46,11 @@ class Etudiant
 
     #[ORM\ManyToOne(inversedBy: 'etudiants')]
     private ?Filliere $filliere = null;
+    
+    #[ORM\ManyToMany(targetEntity:Module::class, inversedBy:"etudiants")]
+    private Collection $modules;
+
+
 
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Note::class, cascade: ['remove'])]
     private Collection $notes;
@@ -96,17 +101,17 @@ class Etudiant
         return $this;
     }
 
-    public function getContact(): ?string
-    {
-        return $this->contact;
-    }
+    public function getCne(): ?string
+{
+    return $this->cne;
+}
 
-    public function setContact(?string $contact): static
-    {
-        $this->contact = $contact;
+public function setCne(?string $cne): static
+{
+    $this->cne = $cne;
 
-        return $this;
-    }
+    return $this;
+}
   
 
     public function getPhoto(): ?string
@@ -142,6 +147,32 @@ class Etudiant
 
         return $this;
     }
+    /**
+ * @return Collection|Module[]
+ */
+public function getModules(): Collection
+{
+    return $this->modules;
+}
+
+public function addModule(Module $module): self
+{
+    if (!$this->modules->contains($module)) {
+        $this->modules[] = $module;
+        $module->addEtudiant($this);
+    }
+
+    return $this;
+}
+
+public function removeModule(Module $module): self
+{
+    if ($this->modules->removeElement($module)) {
+        $module->removeEtudiant($this);
+    }
+
+    return $this;
+}
 
     /**
      * @return Collection<int, Note>

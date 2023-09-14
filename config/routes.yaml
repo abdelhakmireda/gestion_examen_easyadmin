@@ -5,3 +5,8 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+admin_notes_etudiant_search:
+    path: '/admin/notes-etudiant/search'
+    controller: 'App\Controller\Admin\NoteEtudiantCrudController::searchNotes'
+    methods: ['GET']
