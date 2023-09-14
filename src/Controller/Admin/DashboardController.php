@@ -20,6 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
+
 class DashboardController extends AbstractDashboardController
 {
     
@@ -82,16 +83,34 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        // Pour le rôle USER, il peut voir les étudiants et effectuer des actions de recherche
+    if ($this->isGranted('ROLE_USER')) {
+        yield MenuItem::linkToCrud('etudiant', 'fas fa-user-graduate', Etudiant::class);
+        yield MenuItem::section('Gestion des Étudiants', 'fas fa-graduation-cap');
+        yield MenuItem::linkToRoute('Rechercher des Notes d\'un Étudiant', 'fas fa-search', 'admin_notes_etudiant');
+    }
+
+    // Pour le rôle PROFESSEUR, il aura les mêmes autorisations que ROLE_USER
+    if ($this->isGranted('ROLE_PROFESSEUR')) {
+        yield MenuItem::linkToCrud('etudiant', 'fas fa-user-graduate', Etudiant::class);
+        yield MenuItem::linkToCrud('examen', 'fas fa-file-alt', Examen::class);
+        yield MenuItem::linkToCrud('Note', 'fas fa-sticky-note', Note::class);
+        yield MenuItem::section('Gestion des Étudiants', 'fas fa-graduation-cap');
+        yield MenuItem::linkToRoute('Rechercher des Notes d\'un Étudiant', 'fas fa-search', 'admin_notes_etudiant');
+    }
+
+    // Pour le rôle ADMIN, il aura accès à toutes les sections
+    if ($this->isGranted('ROLE_ADMIN')) {
         yield MenuItem::linkToCrud('etudiant', 'fas fa-user-graduate', Etudiant::class);
         yield MenuItem::linkToCrud('Professeur', 'fas fa-chalkboard-teacher', Professeur::class);
         yield MenuItem::linkToCrud('examen', 'fas fa-file-alt', Examen::class);
         yield MenuItem::linkToCrud('Filliere', 'fas fa-university', Filliere::class);
         yield MenuItem::linkToCrud('Module', 'fas fa-book', Module::class);
         yield MenuItem::linkToCrud('Note', 'fas fa-sticky-note', Note::class);
-        yield MenuItem::linkToCrud('user', 'fas fa-sticky-note', User::class);
-        yield MenuItem::section('Gestion des Étudiants', 'fas fa-graduation-cap')->setPermission('ROLE_ADMIN');
+        yield MenuItem::linkToCrud('user', 'fas fa-user', User::class);
+        yield MenuItem::section('Gestion des Étudiants', 'fas fa-graduation-cap');
         yield MenuItem::linkToRoute('Rechercher des Notes d\'un Étudiant', 'fas fa-search', 'admin_notes_etudiant');
+    }
 
     }
 }

@@ -56,13 +56,8 @@ class EtudiantCrudController extends AbstractCrudController
         return Etudiant::class;
     }
 
-    public function configureActions(Actions $actions): Actions
-    {
-        return $actions
-            ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            ->add(Crud::PAGE_INDEX, Action::new('printStudentList', 'Imprimer la liste des étudiants')
-                ->linkToUrl($this->generateUrl('admin_etudiant_print')));
-    }
+ 
+
 
     public function configureFields(string $pageName): iterable
     {

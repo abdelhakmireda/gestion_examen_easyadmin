@@ -11,6 +11,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextBlockField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 class UserCrudController extends AbstractCrudController
 {
@@ -24,13 +28,15 @@ class UserCrudController extends AbstractCrudController
         return [
             TextField::new('username', 'Nom d\'utilisateur'),
             EmailField::new('email', 'Email'),
-            TextField::new('password', 'Mot de passe'), // Utilisez cette option pour masquer le mot de passe
-            ArrayField::new('roles', 'Rôles')
+            TextField::new('password', 'Mot de passe'),
+              ArrayField::new('roles', 'Rôles')
                 ->hideOnForm(),
             ChoiceField::new('roles', 'Rôles')
                 ->setChoices([
                     'Utilisateur' => 'ROLE_USER',
+                    'Professeur' => 'ROLE_PROFESSEUR',
                     'Administrateur' => 'ROLE_ADMIN',
+                    
                 ])
                 ->allowMultipleChoices()
                 ->autocomplete(),
